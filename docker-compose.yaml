@@ -1,0 +1,34 @@
+version: '2.3'
+
+services:
+  permission:
+    image: permission:latest
+    container_name: permission
+    build:
+      # 指定应用所在目录
+      context: .
+      # 传递APP_NAME参数
+      args:
+        APP_NAME: permission
+    ports:
+      # 映射宿主机端口到容器内部的8081端口
+      - "8086:8080"
+    environment:
+      # 设置时区
+      TZ: Asia/Shanghai
+      DB_HOST: mysql
+#    depends_on:
+#      # 声明依赖的mysql服务
+#      - mysql
+    restart: always
+
+#  mysql:
+#    image: mysql:latest
+#    ports:
+#      - "3306:33060"
+#    environment:
+#      # 设置root用户密码和新建的数据库和用户的用户名和密码
+#      MYSQL_ROOT_PASSWORD: Winston110150
+#      MYSQL_DATABASE: permission
+#      TZ: Asia/Shanghai
+#    restart: always

@@ -1,0 +1,9 @@
+common:
+  expire: 2592000
+  timeControl:
+    switch: 1
+    maxTime: 60
+keystore:
+  key1: "@fG2SuLA"
+  key2: "#G4"
+  key3: "8&%d*"
