@@ -1,0 +1,7 @@
+passport:
+  service: passport
+  domain: http://127.0.0.1:8082
+  # 超时配置，time.Duration 类型
+  timeout: 3000ms
+  # 重试次数，最多执行retry+1次
+  retry: 2

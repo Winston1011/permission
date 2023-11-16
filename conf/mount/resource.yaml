@@ -1,0 +1,164 @@
+zos:
+  buckets:
+    - bucket: epoch-ship
+    - bucket: epoch-test
+    - bucket: epoch-athena
+  client:
+    connectTimeout: 1000ms
+    timeout: 20000ms
+
+mysql:
+  gc-hk:
+    service: gc-hk
+    database: chatgptv2
+    addr: "xxx"
+    user: "xxx"
+    password: "xxx"
+    maxidleconns: 50
+    maxopenconns: 100
+    maxIdleTime: 300s
+    connMaxLifeTime: 3600s
+    connTimeOut: 1500ms
+    writeTimeOut: 3s
+    readTimeOut: 3s
+
+redis:
+  demo:
+    service: demo
+    addr: "@@redis.demo.addr"
+    user: "@@redis.demo.user"
+    password: "@@redis.demo.password"
+    maxIdle: 10
+    maxActive: 50
+    idleTimeout: 5m
+    connTimeOut: 1200ms
+    readTimeOut: 1200ms
+    writeTimeOut: 1200ms
+    maxConnLifetime: 10m
+
+hbase:
+  demo:
+    service: demo
+    addr: "@@hbase.demo.addr"
+    timeout: 3s
+    maxIdle: 5
+    maxActive: 10
+    idleTimeout: 30s
+
+elastic:
+  demo:
+    service: demo
+    addr: "@@es.demo.addr"
+    username: "@@es.demo.username"
+    password: "@@es.demo.password"
+    gzip: true
+    # <0 表示不打印trace日志;>0表示trace日志msg长度最大为debugMsgLen; =0表示不做处理
+    debugMsgLen: 0
+
+cos:
+  image10:
+    bucket: epoch-image10
+    app_id: "@@cos.image10.app_id"
+    secret_id: "@@cos.image10.secret_id"
+    secret_key: "@@cos.image10.secret_key"
+    region: ap-beijing
+    picture_region: picbj
+    filesize_limit: 1048576
+    thumbnail: 1
+    directory: ""
+    file_prefix: dz10_
+    cloud: tencent
+  image:
+    bucket: epoch-image
+    secret_id: "@@cos.image.secret_id"
+    secret_key: "@@cos.image.secret_key"
+    region: bj.bcebos.com
+    filesize_limit: 1048576
+    directory: ""
+    file_prefix: dz_
+    cnameEnabled: true
+    cloud: baidu
+  athena:
+    bucket: epoch-athena-test
+    secret_id: "@@cos.athena.secret_id"
+    secret_key: "@@cos.athena.secret_key"
+    region: http://oss-cn-beijing.aliyuncs.com
+    filesize_limit: 0
+    directory: ""
+    file_prefix: dz_
+    cnameEnabled: true
+    cloud: ali
+  athena2:
+    bucket: epoch-athena-test2
+    secret_id: "@@cos.athena2.secret_id"
+    secret_key: "@@cos.athena2.secret_key"
+    region: http://oss-cn-beijing.aliyuncs.com
+    filesize_limit: 0
+    directory: ""
+    file_prefix: dz_
+    cnameEnabled: true
+    cloud: ali
+
+rmqv2:
+  producer:
+    # service: producer 名称，不同 producer 间不可重复
+    - service: rocketmq-test
+      # 提供名字服务器的地址，eg: mq-xxx-svc.mq
+      nameserver: "svc:port"
+      # 需要生产信息的topic名称
+      topic: rocketmq-test
+      # 消息生产失败的重试次数 默认不重试
+      retry: 3
+      # 消息生产的超时时间 默认1s
+      timeout: 1000ms
+
+  consumer:
+    # service: consumer 名称，不同 consumer 间不可重复
+    - service: consume-test
+      # 提供名字服务器的地址，eg: mq-xxx-svc.mq
+      nameserver: "svc:port"
+      # 需要消费信息的topic名称
+      topic: rocketmq-test
+      # 消费组名称, 不同服务间要保持名称唯一
+      group: test-group
+      # 要消费消息的标签, 为空的话则会默认消费所有消息
+      tags:
+        - "tagA"
+      # 是否是广播消费模式 广播消费模式下每个消费者实例会全量消费所有的消息, 而集群模式下每个消费者实例会竞争消费每条消息
+      broadcast: false
+      # 顺序消费 对消息的处理顺序有要求的业务需要设置为true, false代表使用并发消费模式
+      orderly: false
+      # 消费失败重试次数, 默认不重试
+      retry: 3
+
+nmq:
+  goweb:
+    nameservers:
+      - "@@nmq.goweb.nameservers.0"
+    group: rmqtest-group
+    retry: 3
+    timeout: 1000
+    commands:
+      inf.goweb:
+        10001:
+          - "uid"
+        10002:
+          - "uid"
+          - "sid"
+      zb.core:
+        1234567: []
+
+kafkapub:
+  demo:
+    service: demo
+    addr: x.y.z.1:port
+    rawMsg: true
+
+
+kafkasub:
+  demo:
+    service: demo
+    topic: ["topic1", "topic2"]
+    group: group1
+    brokers:
+      - x.y.z.1:port

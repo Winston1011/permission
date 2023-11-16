@@ -1,0 +1,12 @@
+pprof:
+    enable: false
+
+log:
+    # 日志级别, 支持 debug info warn error panic fatal ，默认info
+    level: debug
+    # 是否输出到终端，仅在开发环境有效
+    stdout: true
+
+server:
+    address: ":8083"
+

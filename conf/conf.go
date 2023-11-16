@@ -1,7 +1,6 @@
 package conf
 
 import (
-	"permission/pkg/antispam"
 	"permission/pkg/golib/v2/base"
 	"permission/pkg/golib/v2/env"
 	"permission/pkg/golib/v2/hbase"
@@ -18,9 +17,6 @@ var (
 	BasicConf TBasic
 	API       TApi
 	RConf     ResourceConf
-
-	// 业务配置全局变量
-	AntiConf antispam.Config
 )
 
 // 基础配置,对应config.yaml
@@ -33,7 +29,7 @@ type TBasic struct {
 
 // 对应 api.yaml
 type TApi struct {
-	Demo base.ApiClient
+	Passport base.ApiClient `yaml:"passport"`
 }
 
 // 对应 resource.yaml
@@ -58,11 +54,5 @@ func InitConf() {
 
 	// 加载资源类配置（optional）
 	env.LoadConf("resource.yaml", env.SubConfMount, &RConf)
-
-	// 加载业务类(需要通过配置中心可修改的业务类配置)配置 （optional）
-	// ... 加载更多配置
-
-	// 加载业务类(需跟随代码发布的)配置 （optional）
-	env.LoadConf("app.yaml", env.SubConfApp, &AntiConf)
 
 }
